@@ -3,3 +3,25 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+nav {
+    background-color: #1976D2;
+}
+
+nav ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+nav li{
+    position: relative;
+}
+
+nav a {
+    text-align: center;     /* Centers navbar links on mobiles */
+    text-decoration: none;
+    display: block;         
+    color: #E0E0E0;
+    padding: .2em 0;
+}

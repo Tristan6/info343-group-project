@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import 'whatwg-fetch';
+// import Plot from 'react-plotly.js';
 import key from './key';
 
 class App extends Component {
@@ -9,11 +11,17 @@ class App extends Component {
             results: [],
             jobTerm: null,
             locationTerm: null,
-            hiring: false,
-            errorMessage: undefined
+            errorMessage: null
         };
     }
 
+    // Places an error alert under the search input & button
+    renderError(errorText) {
+        let newError = <p className="alert alert-danger">{errorText}</p>
+        this.setState({ errorMessage: newError });
+    }
+
+    // Fetches data based on the defined values in the state
     getData(job, location, hiring) {
         let url = 'https://data.usajobs.gov/api/search?Keyword=' + job;
         if (location) {
@@ -29,60 +37,82 @@ class App extends Component {
         })
             .then((response) => (response.json()))
             .then((data) => {
-                this.setState({ results: data.SearchResult.SearchResultItems })
+                // This removes the error message when a valid search has been completed (data to render) 
+                this.setState({ errorMessage: null });
+                // The following if statements determine what data manipulation you would like to do 
+                // using passed-in or state values
+                if (location) {
+                    // Do job search by location data manipulation (call a function)
+                    console.log('Do a job search by location!');
+                } else if (hiring) {
+                    this.getSalaryData(data);
+                } else {
+                    // Do job skills/description data manipulation (call a function)
+                    console.log('Do a job skill or job description search!');
+                }
             })
             .catch((err) => {
-                this.setState({ errorMessage: err.message });
-            })
+                this.setState({ results: null });
+                this.renderError(err.message);
+            });
+    }
+
+    // Structure the data for the 'hiring' tab-component
+    getSalaryData(data) {
+        let salaryResults = data.SearchResult.SearchResultItems.map((result) => {
+
+            let salaryInfo = result.MatchedObjectDescriptor.PositionRemuneration[0];
+            let MaxSalary = parseInt(salaryInfo.MaximumRange, 10);
+            let MinSalary = parseInt(salaryInfo.MinimumRange, 10);
+            let payInterval = salaryInfo.RateIntervalCode;
+
+            let resultObj = {
+                jobTitle: result.MatchedObjectDescriptor.PositionTitle,
+                avgSalary: ((MaxSalary + MinSalary) / 2),
+                payInterval: payInterval
+            }
+            return resultObj;
+        });
+        console.log(salaryResults);
+        this.setState({ results: salaryResults });
+        this.setState({ jobTerm: null, locationTerm: null });
     }
 
     // Attach to job/skill keyword search bar
-    handleJobChange(job) {
-        this.setState({ jobTerm: job });
+    handleJobChange(event) {
+        this.setState({ jobTerm: event.target.value });
     }
 
-    // Attach to location search bar
-    handleLocationChange(job, location) {
-        // Converting the location into an API acceptable format 
-        if (location.indexOf(',') > -1) {
-            let city = location.substring(0, location.indexOf(',') + 1);
-            let state = location.substring((location.indexOf(',') + 2));
-            location = city + '%20' + state;
-            this.setState({ jobTerm: job, locationTerm: location });
-        }
-    }
-
-    // Attach to 'hiring' tab search bar
-    handleHiringManagers(job) {
-        this.setState({ jobTerm: job, hiring: true });
-    }
-
-    // 
-    handleClick() {
-        this.getData(this.state.jobTerm, this.state.locationTerm, this.state.hiring);
+    // This fetches the data when the search button is clicked
+    handleClick(hiring) {
+        this.getData(this.state.jobTerm, this.state.locationTerm, hiring);
     }
 
     render() {
         return (
             <div className="App">
                 <header className="App-header">
+                    <nav>
+                        <ul>
+                            <li><a href="">Home</a></li>
+                            <li><a href="">Job Skills</a></li>
+                            <li><a href="">Jobs Near You</a></li>
+                            <li><a href="">Hiring?</a></li>
+                            <li><a href="">Recent Searches</a></li>
+                            <li><a href="">Account</a></li>
+                        </ul>
+                    </nav>
                     <h1 className="App-title">Welcome to Our Website</h1>
                 </header>
                 <p className="App-intro">
                     This will be our landing page!
                 </p>
-                <div>
-                    <button onClick={() => this.handleJobChange('Software Engineering')}>Search for a Job</button>
-                </div>
-                <div>
-                    <button onClick={() => this.handleLocationChange('Software Engineering', 'Atlanta, Georgia')}>Search for a job at a specified location</button>
-                </div>
-                <div>
-                    <button onClick={() => this.handleHiringManagers('Software Engineering')}>Get the avg salary of a job</button>
-                </div>
-                <div>
-                    <button onClick={() => this.handleClick('Software Engineering', 'Atlanta, Georgia')}>Get the Data</button>
-                </div>
+                <Hiring
+                    handleJobChange={(event) => this.handleJobChange(event)}
+                    handleClick={(hiring) => this.handleClick(hiring)}
+                    results={this.state.results}
+                />
+                {this.state.errorMessage}
             </div>
         );
     }
@@ -90,3 +120,28 @@ class App extends Component {
 
 export default App;
 
+class Hiring extends Component {
+    render() {
+        this.hiring = true;
+
+        return (
+            <div className="container">
+                <div className="row">
+                    <input
+                        type="text"
+                        name="term"
+                        id="searchQuery"
+                        className="form-control" placeholder="Search for jobs. . ."
+                        onChange={(event) => this.props.handleJobChange(event)}
+                    />
+                </div>
+                <div className="row">
+                    <button className="btn" onClick={() => this.props.handleClick(this.hiring)}>Search</button>
+                </div>
+                <div className="row">
+                    {/* <BarGraph results={this.props.results} /> */}
+                </div>
+            </div>
+        );
+    }
+}
