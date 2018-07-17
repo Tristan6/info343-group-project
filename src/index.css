@@ -3,3 +3,11 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+#locationPlot {
+  margin: 0 auto;
+  width: fit-content;
+}
+/* #plotDiv {
+  margin: 0 auto;
+  justify-content: center;
+} */

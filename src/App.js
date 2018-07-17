@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import key from './key';
+import Location from './Location';
 
 class App extends Component {
     constructor(props) {
@@ -83,6 +84,7 @@ class App extends Component {
                 <div>
                     <button onClick={() => this.handleClick('Software Engineering', 'Atlanta, Georgia')}>Get the Data</button>
                 </div>
+                <Location />
             </div>
         );
     }
