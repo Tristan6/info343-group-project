@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
+import { Container, Row, Col } from 'reactstrap';
 import HomePage from './HomePage';
 import Hiring from './Hiring';
 import Skills from './Skills';
@@ -37,21 +38,21 @@ class App extends Component {
                 </main>
 
                 <footer>
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-xs-4">
+                    <Container>
+                        <Row>
+                            <Col xs="4">
                                 <p>
                                     Privacy Policy: Our Website Title will NOT save, distrubute, or use
                                     your account information for any purpose other than sending you
                                     updates based on your saved items.
                                 </p>
-                            </div>
-                            <div className="col-xs-4"></div>
-                            <div className="col-xs-4">
+                            </Col>
+                            <Col xs="4"></Col>
+                            <Col xs="4">
                                 <p>Copyright 2018 PathFinder. All Rights reserved.</p>
-                            </div>
-                        </div>
-                    </div>
+                            </Col>
+                        </Row>
+                    </Container>
                 </footer>
             </div>
         );

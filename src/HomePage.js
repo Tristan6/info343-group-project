@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Container, Card, CardBody, CardTitle, CardText, Col, Row } from 'reactstrap';
 
 class HomePage extends Component {
     render() {
@@ -19,9 +19,9 @@ class HomePage extends Component {
                     </p>
                 <div className="blue-bar"></div>
                 <h3>Quick Tips:</h3>
-                <Grid>
+                <Container>
                     <Row>
-                        <Col xs={12} sm={4}>
+                        <Col xs="12" sm="4">
                             <div className="card">
                                 <div className="card-body">
                                     <h4>Know Your Role</h4>
@@ -36,7 +36,7 @@ class HomePage extends Component {
                                 </div>
                             </div>
                         </Col>
-                        <Col xs={12} sm={4}>
+                        <Col xs="12" sm="4">
                             <div className="card">
                                 <div className="card-body">
                                     <h4>Have Goals</h4>
@@ -47,7 +47,7 @@ class HomePage extends Component {
                                 </div>
                             </div>
                         </Col>
-                        <Col xs={12} sm={4}>
+                        <Col xs="12" sm="4">
                             <div className="card">
                                 <div className="card-body">
                                     <h4>Independent Research</h4>
@@ -60,7 +60,7 @@ class HomePage extends Component {
                             </div>
                         </Col>
                     </Row>
-                </Grid>
+                </Container>
             </div>
         )
     }
