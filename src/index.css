@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 nav {
@@ -24,4 +24,132 @@ nav a {
     display: block;         
     color: #E0E0E0;
     padding: .2em 0;
+}
+
+nav a:hover {
+    background-color: #E0E0E0;
+    text-decoration: none;
+    color: #212121;
+}
+
+nav navlink:focus {
+    background-color: #E0E0E0;
+    text-decoration: none;
+    color: #212121;
+}
+
+.activeLink {
+    background-color: #E0E0E0;
+    color: #212121;
+} 
+
+h1 {
+    margin-bottom: 20px;
+}
+
+h2 {
+    padding: 20px 0;
+}
+
+h4 {
+    color: #2196F3;
+}
+
+.blue-bar {
+    margin-top: 30px;
+    height: 10px;                   
+    background-color: #1976D2;
+}
+
+/* Fix the margins for the blue bar on the Hiring tab */
+.margin-left .blue-bar {
+    margin-left: 9px;
+    margin-right: 9px;
+}
+
+/* Line the bullet points up with the center of the first letter of the card title */
+.card-body ul {
+    padding-left: 15px;
+}
+
+.form-control {
+    width: max-content;
+    margin-bottom: 10px;
+}
+
+/* Non-responsive center class (these elements are always centered) */
+.center {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+/* Responsive center class (these elements are centered on small screens) */
+.center-small {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.App-intro {
+    width: auto;
+}
+
+footer {
+    margin-top: 20px;
+    padding-top: 10px;
+    color: #E0E0E0;
+    background-color: #1976D2;
+}
+
+@media (min-width: 768px) 
+{
+    nav {
+        height: 50px;
+    }
+
+    nav ul {
+        height: inherit;
+    }
+
+    nav li{
+        height: inherit;
+        /* Switch from vertical to horizontal navigation links for medium and larger screns */
+        display: inline-block;
+    }
+
+    nav li:nth-of-type(1) {
+        margin-left: 3em;
+    }
+    
+    nav a {
+        padding: 15px 25px;
+        height: fit-content;
+    }
+
+    /* Responsive center class (these elements are not centered on medium and larger screens) */
+    .center-small {
+        margin: unset;
+    }
+
+    h1 {
+        padding-left: 20px;
+        padding-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .margin-left {
+        margin-left: 40px;
+    }
+
+    /* Fix the margins for the blue bar on the Hiring tab */
+    .margin-left .blue-bar {
+        margin-left: -31px;
+    }
+}
+
+@media (min-width: 992px) 
+{
+    /* Navigation styling */
+    nav li:nth-of-type(1) {
+        margin-left: 6em;
+    }
 }
