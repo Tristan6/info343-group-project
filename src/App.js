@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import key from './key';
 import Location from './Location';
+import Skills from './Skills';
+import Salary from './Salary';
 
 class App extends Component {
     constructor(props) {
@@ -31,6 +33,7 @@ class App extends Component {
             .then((response) => (response.json()))
             .then((data) => {
                 this.setState({ results: data.SearchResult.SearchResultItems })
+                console.log(this.state.results)
             })
             .catch((err) => {
                 this.setState({ errorMessage: err.message });
@@ -72,15 +75,14 @@ class App extends Component {
                 <p className="App-intro">
                     This will be our landing page!
                 </p>
+                <Skills />
                 <div>
                     <button onClick={() => this.handleJobChange('Software Engineering')}>Search for a Job</button>
                 </div>
                 <div>
                     <button onClick={() => this.handleLocationChange('Software Engineering', 'Atlanta, Georgia')}>Search for a job at a specified location</button>
                 </div>
-                <div>
-                    <button onClick={() => this.handleHiringManagers('Software Engineering')}>Get the avg salary of a job</button>
-                </div>
+                <Salary />
                 <div>
                     <button onClick={() => this.handleClick('Software Engineering', 'Atlanta, Georgia')}>Get the Data</button>
                 </div>

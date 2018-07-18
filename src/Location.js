@@ -46,6 +46,7 @@ class Location extends Component {
                     jobArray: data.SearchResult.SearchResultItems,
                     isLoaded: true
                 });
+                console.log(this.state.jobArray)
             })
             .catch((err) => {
                 this.setState({ errorMessage: err.message });
