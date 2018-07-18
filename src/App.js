@@ -82,11 +82,9 @@ class App extends Component {
                 <div>
                     <button onClick={() => this.handleLocationChange('Software Engineering', 'Atlanta, Georgia')}>Search for a job at a specified location</button>
                 </div>
-                <Salary />
                 <div>
                     <button onClick={() => this.handleClick('Software Engineering', 'Atlanta, Georgia')}>Get the Data</button>
                 </div>
-                <Location />
             </div>
         );
     }
