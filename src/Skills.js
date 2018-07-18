@@ -63,7 +63,7 @@ class Skills extends Component {
    //Fetches results from the search bar
    getData(jobTitle) {
       jobTitle = jobTitle.replace(/\s+/g, '%20')
-      let url = 'https://data.usajobs.gov/api/search?Keyword=' + jobTitle + '&ResultsPerPage=500';
+      let url = 'https://data.usajobs.gov/api/search?jobTitle=' + jobTitle + '&ResultsPerPage=500';
       fetch(url, {
          headers: {
             "Host": 'data.usajobs.gov',
