@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
 import { Grid, Row, Col } from 'react-bootstrap';
-import Hiring from './Hiring';
 import HomePage from './HomePage';
+import Hiring from './Hiring';
+import Skills from './Skills';
 
 class App extends Component {
+
     render() {
         return (
             <div className="App">
@@ -25,7 +27,7 @@ class App extends Component {
                 <main>
                     <Switch>
                         <Route exact path='/' component={HomePage} />
-                        {/* <Route path='/job-skills' component={Hiring} />
+                        {/* <Route path='/job-skills' component={Skills} />
                         <Route path='/jobs-near-you' component={Location} /> */}
                         <Route path='/hiring' component={Hiring} />
                         {/* <Route path='/recent-searches' component={Hiring} />

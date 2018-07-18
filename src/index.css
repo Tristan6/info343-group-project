@@ -100,6 +100,11 @@ footer {
     background-color: #1976D2;
 }
 
+#locationPlot {
+    margin: 0 auto;
+    width: fit-content;
+}
+
 @media (min-width: 768px) 
 {
     nav {
