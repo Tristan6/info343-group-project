@@ -105,6 +105,10 @@ footer {
     width: fit-content;
 }
 
+div.col-sm-4 {
+    margin-bottom: 10px;
+}
+
 @media (min-width: 768px) 
 {
     nav {
@@ -126,7 +130,7 @@ footer {
     }
     
     nav a {
-        padding: 15px 25px;
+        padding: 13px 25px;
         height: fit-content;
     }
 

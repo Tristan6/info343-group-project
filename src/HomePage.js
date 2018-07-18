@@ -38,7 +38,7 @@ class HomePage extends Component {
                         </Col>
                         <Col xs={12} sm={4}>
                             <div className="card">
-                                <div>
+                                <div className="card-body">
                                     <h4>Have Goals</h4>
                                     <p className="card-text">
                                         Set goals for yourself, whether that is to get a job or hire a
@@ -49,7 +49,7 @@ class HomePage extends Component {
                         </Col>
                         <Col xs={12} sm={4}>
                             <div className="card">
-                                <div>
+                                <div className="card-body">
                                     <h4>Independent Research</h4>
                                     <p className="card-text">
                                         Do not solely rely on our website! While we do pride ourselves on

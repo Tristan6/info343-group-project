@@ -14,8 +14,8 @@ class App extends Component {
                     <nav>
                         <ul>
                             <li><NavLink exact to="/" activeClassName="activeLink">Home</NavLink></li>
-                            {/* <li><NavLink to="/job-skills" activeClassName="activeLink">Job Skills</NavLink></li>
-                            <li><NavLink to="/jobs-near-you" activeClassName="activeLink">Jobs Near You</NavLink></li> */}
+                            <li><NavLink to="/job-skills" activeClassName="activeLink">Job Skills</NavLink></li>
+                            {/* <li><NavLink to="/jobs-near-you" activeClassName="activeLink">Jobs Near You</NavLink></li> */}
                             <li><NavLink to="/hiring" activeClassName="activeLink">Hiring?</NavLink></li>
                             {/* <li><NavLink to="/recent-searches" activeClassName="activeLink">Recent Searches</NavLink></li>
                             <li><NavLink to="/account" activeClassName="activeLink">Account</NavLink></li> */}
@@ -27,8 +27,8 @@ class App extends Component {
                 <main>
                     <Switch>
                         <Route exact path='/' component={HomePage} />
-                        {/* <Route path='/job-skills' component={Skills} />
-                        <Route path='/jobs-near-you' component={Location} /> */}
+                        <Route path='/job-skills' component={Skills} />
+                        {/* <Route path='/jobs-near-you' component={Location} /> */}
                         <Route path='/hiring' component={Hiring} />
                         {/* <Route path='/recent-searches' component={Hiring} />
                         <Route path='/account' component={Hiring} /> */}
