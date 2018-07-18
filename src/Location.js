@@ -32,7 +32,7 @@ class Location extends Component {
     }
 
     getData(location) {
-        let url = 'https://data.usajobs.gov/api/search?Keyword=' + location;
+        let url = 'https://data.usajobs.gov/api/search?Keyword=' + location + "&ResultsPerPage=100";
         fetch(url, {
             headers: {
                 "Host": 'data.usajobs.gov',
