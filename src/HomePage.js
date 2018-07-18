@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Card, CardBody, CardTitle, CardText, Col, Row } from 'reactstrap';
+import { Container, Col, Row } from 'reactstrap';
 
 class HomePage extends Component {
     render() {

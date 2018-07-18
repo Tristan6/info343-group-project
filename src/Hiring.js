@@ -95,6 +95,15 @@ class Hiring extends Component {
             window.innerWidth || document.body.clientWidth || document.documentElement.clientWidth
         );
 
+        this.barGraph = (
+            <BarGraph
+                results={this.state.results}
+                isLoaded={this.state.isLoaded}
+                errorMessage={this.state.errorMessage}
+                screenWidth={this.screenWidth}
+            />
+        );
+
         return (
             <div className="margin-left">
                 <h2 className="center-small">For Hiring Managers</h2>
@@ -120,12 +129,7 @@ class Hiring extends Component {
                 <div className="blue-bar"></div>
                 <div>
                     {this.state.errorMessage}
-                    <BarGraph
-                        results={this.state.results}
-                        isLoaded={this.state.isLoaded}
-                        errorMessage={this.state.errorMessage}
-                        screenWidth={this.screenWidth}
-                    />
+                    {this.barGraph}
                 </div>
             </div>
         );
@@ -151,11 +155,38 @@ class BarGraph extends Component {
 
             // Determine the size of the graph
             if (this.props.screenWidth < 768) {
-                this.layout = { width: 320, height: 400, title: 'Salary Data' }
+                this.layout = {
+                    width: 320, height: 400, title: 'Salary Data',
+                    yaxis: {
+                        title: "wage ($)",
+                        titlefont: {
+                            family: 'Open Sans',
+                            size: 18
+                        }
+                    }
+                }
             } else if (this.props.screenWidth < 992) {
-                this.layout = { width: 600, height: 500, title: 'Salary Data' }
+                this.layout = {
+                    width: 600, height: 500, title: 'Salary Data',
+                    yaxis: {
+                        title: "wage ($)",
+                        titlefont: {
+                            family: 'Open Sans',
+                            size: 18
+                        }
+                    }
+                }
             } else {
-                this.layout = { width: 800, height: 600, title: 'Salary Data' }
+                this.layout = {
+                    width: 800, height: 600, title: 'Salary Data',
+                    yaxis: {
+                        title: "wage ($)",
+                        titlefont: {
+                            family: 'Open Sans',
+                            size: 18
+                        }
+                    }
+                }
             }
 
             // Job Title by Salary (Plotly.js bar plot)

@@ -109,7 +109,11 @@ class Account extends Component {
         this.setState({ errorMessage: null });
         firebase.auth().signInWithEmailAndPassword(email, password)
             .catch((error) => {
-                this.setState({ errorMessage: error.message });
+                if (error.message === 'The password is invalid or the user does not have a password.') {
+                    this.setState({ errorMessage: "The email or password is incorrect." });
+                } else {
+                    this.setState({ errorMessage: error.message });
+                }
             });
     }
 

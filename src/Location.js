@@ -76,6 +76,15 @@ class Location extends Component {
             window.innerWidth || document.body.clientWidth || document.documentElement.clientWidth
         );
 
+        this.barGraph = (
+            <BarGraph
+                data={this.state.jobArray}
+                isLoaded={this.state.isLoaded}
+                errorMessage={this.state.errorMessage}
+                screenWidth={this.screenWidth}
+            />
+        );
+
         return (
             <div className="margin-left">
                 <div>
@@ -103,12 +112,7 @@ class Location extends Component {
                 <div className="blue-bar"></div>
                 <h3 className="center-small">Results</h3>
                 {this.state.errorMessage}
-                <BarGraph
-                    data={this.state.jobArray}
-                    isLoaded={this.state.isLoaded}
-                    errorMessage={this.state.errorMessage}
-                    screenWidth={this.screenWidth}
-                />
+                {this.barGraph}
             </div>
         );
     }
