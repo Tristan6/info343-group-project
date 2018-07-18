@@ -48,7 +48,7 @@ class App extends Component {
                             </div>
                             <div className="col-xs-4"></div>
                             <div className="col-xs-4">
-                                <p>Copyright 2018 Our Website Name. All Rights reserved.</p>
+                                <p>Copyright 2018 PathFinder. All Rights reserved.</p>
                             </div>
                         </div>
                     </div>
@@ -59,20 +59,3 @@ class App extends Component {
 }
 
 export default App;
-
-// import { Grid, Row, Col } from 'react-bootstrap';
-{/* <Grid>
-    <Row>
-        <Col xs={4}>
-            <p>
-                Privacy Policy: Our Website Title will NOT save, distrubute, or use
-            your account information for any purpose other than sending you
-            updates based on your saved items.
-        </p>
-        </Col>
-        <Col xs={4}></Col>
-        <Col xs={4}>
-            <p>Copyright 2018 Our Website Name. All Rights reserved.</p>
-        </Col>
-    </Row>
-</Grid> */}
