@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import Plot from 'react-plotly.js';
+import firebase from 'firebase/app';
 import 'whatwg-fetch';
 import key from './key';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -12,8 +13,21 @@ class Location extends Component {
             jobArray: [],
             isLoaded: false,
             location: null,
+            screenWidth: null,
             errorMessage: null
         }
+    }
+
+    save(searchResults, searchTerm, typeOfSearch) {
+        let newSavedObj = {
+            searchResults: searchResults,
+            searchTerm: searchTerm,
+            typeOfSearch: typeOfSearch
+        };
+
+        let userId = firebase.auth().currentUser.uid;
+        let ref = firebase.database().ref(userId);
+        ref.push(newSavedObj);
     }
 
     // Places an error alert under the search input & button
@@ -54,7 +68,10 @@ class Location extends Component {
                 let cleanedData = this.count(dataToClean);
                 this.setState({
                     jobArray: cleanedData,
-                    isLoaded: true
+                    isLoaded: true,
+                    screenWidth: (
+                        window.innerWidth || document.body.clientWidth || document.documentElement.clientWidth
+                    )
                 });
             })
             .catch((err) => {
@@ -72,16 +89,12 @@ class Location extends Component {
     }
 
     render() {
-        this.screenWidth = (
-            window.innerWidth || document.body.clientWidth || document.documentElement.clientWidth
-        );
-
         this.barGraph = (
-            <BarGraph
+            <LocationBarGraph
                 data={this.state.jobArray}
                 isLoaded={this.state.isLoaded}
                 errorMessage={this.state.errorMessage}
-                screenWidth={this.screenWidth}
+                screenWidth={this.state.screenWidth}
             />
         );
 
@@ -89,7 +102,7 @@ class Location extends Component {
             <div className="margin-left">
                 <div>
                     <h2 className="center-small">Jobs Near You</h2>
-                    <p className="center-small">
+                    <p className="center-small page-description">
                         Search for a location to see the most common jobs that appear in that location!
                     </p>
                     <div className="center-small">
@@ -107,20 +120,30 @@ class Location extends Component {
                             onClick={() => this.handleClick()}>
                             Search
                         </Button>
+                        {' '}
+                        <Button
+                            color="danger"
+                            disabled={!this.state.isLoaded}
+                            onClick={() => this.save(
+                                this.state.jobArray,
+                                this.state.location,
+                                'location')}>
+                            Save new search
+                        </Button>
                     </div>
                 </div>
                 <div className="blue-bar"></div>
                 <h3 className="center-small">Results</h3>
                 {this.state.errorMessage}
                 {this.barGraph}
-            </div>
+            </div >
         );
     }
 }
 
 export default Location;
 
-class BarGraph extends Component {
+export class LocationBarGraph extends Component {
     render() {
         // Only render the bar graph when their is no error message displayed and the results are loaded
         if (this.props.isLoaded && !this.props.errorMessage) {
@@ -149,7 +172,7 @@ class BarGraph extends Component {
                 }
             } else {
                 this.layout = {
-                    width: 800, height: 600,
+                    width: 780, height: 600,
                     yaxis: {
                         title: "Number of Job Postings",
                         titlefont: {

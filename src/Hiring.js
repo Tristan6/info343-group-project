@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import Plot from 'react-plotly.js';
+import firebase from 'firebase/app';
 import 'whatwg-fetch';
 import key from './key';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,8 +14,21 @@ class Hiring extends Component {
             results: [],
             isLoaded: false,
             jobTerm: null,
+            screenWidth: null,
             errorMessage: null
         };
+    }
+
+    save(searchResults, searchTerm, typeOfSearch) {
+        let newSavedObj = {
+            searchResults: searchResults,
+            searchTerm: searchTerm,
+            typeOfSearch: typeOfSearch
+        };
+
+        let userId = firebase.auth().currentUser.uid;
+        let ref = firebase.database().ref(userId);
+        ref.push(newSavedObj);
     }
 
     // Places an error alert under the search input & button
@@ -67,7 +81,9 @@ class Hiring extends Component {
                     this.setState({
                         results: salaryResults,
                         isLoaded: true,
-                        jobTerm: null
+                        screenWidth: (
+                            window.innerWidth || document.body.clientWidth || document.documentElement.clientWidth
+                        )
                     });
                 }
             })
@@ -91,23 +107,19 @@ class Hiring extends Component {
     }
 
     render() {
-        this.screenWidth = (
-            window.innerWidth || document.body.clientWidth || document.documentElement.clientWidth
-        );
-
         this.barGraph = (
-            <BarGraph
-                results={this.state.results}
+            <HiringBarGraph
+                data={this.state.results}
                 isLoaded={this.state.isLoaded}
                 errorMessage={this.state.errorMessage}
-                screenWidth={this.screenWidth}
+                screenWidth={this.state.screenWidth}
             />
         );
 
         return (
             <div className="margin-left">
                 <h2 className="center-small">For Hiring Managers</h2>
-                <p className="center-small">
+                <p className="center-small page-description">
                     Search for a job to see the average salary of that job among other, similar jobs!
                 </p>
                 <div className="center-small">
@@ -125,8 +137,19 @@ class Hiring extends Component {
                         onClick={() => this.handleClick()}>
                         Search
                     </Button>
+                    {' '}
+                    <Button
+                        color="danger"
+                        disabled={!this.state.isLoaded}
+                        onClick={() => this.save(
+                            this.state.results,
+                            this.state.jobTerm,
+                            'hiring')}>
+                        Save new search
+                    </Button>
                 </div>
                 <div className="blue-bar"></div>
+                <h3 className="center-small">Results</h3>
                 <div>
                     {this.state.errorMessage}
                     {this.barGraph}
@@ -138,11 +161,11 @@ class Hiring extends Component {
 
 export default Hiring;
 
-class BarGraph extends Component {
+export class HiringBarGraph extends Component {
     render() {
         // Only render the bar graph when their is no error message displayed and the results are loaded
         if (this.props.isLoaded && !this.props.errorMessage) {
-            let salaryData = this.props.results;
+            let salaryData = this.props.data;
             // Create an array of returned job titles
             let xIndex = salaryData.map((result) => {
                 return result.jobTitle;
@@ -178,7 +201,7 @@ class BarGraph extends Component {
                 }
             } else {
                 this.layout = {
-                    width: 800, height: 600, title: 'Salary Data',
+                    width: 780, height: 600, title: 'Salary Data',
                     yaxis: {
                         title: "wage ($)",
                         titlefont: {

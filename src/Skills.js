@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import Plot from 'react-plotly.js';
+import firebase from 'firebase/app';
 import 'whatwg-fetch';
 import key from './key';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,8 +14,21 @@ class Skills extends Component {
             jobArray: [],
             isLoaded: false,
             jobTitle: null,
+            screenWidth: null,
             errorMessage: null
         }
+    }
+
+    save(searchResults, searchTerm, typeOfSearch) {
+        let newSavedObj = {
+            searchResults: searchResults,
+            searchTerm: searchTerm,
+            typeOfSearch: typeOfSearch
+        };
+
+        let userId = firebase.auth().currentUser.uid;
+        let ref = firebase.database().ref(userId);
+        ref.push(newSavedObj);
     }
 
     // Places an error alert under the search input & button
@@ -82,7 +96,10 @@ class Skills extends Component {
                 let cleanedData = this.count(dataToClean);
                 this.setState({
                     jobArray: cleanedData,
-                    isLoaded: true
+                    isLoaded: true,
+                    screenWidth: (
+                        window.innerWidth || document.body.clientWidth || document.documentElement.clientWidth
+                    )
                 });
             })
             .catch((err) => {
@@ -100,39 +117,20 @@ class Skills extends Component {
     }
 
     render() {
-        let data = this.state.jobArray;
-        this.barGraph = <div></div>;
+        this.barGraph = (
+            <SkillsBarGraph
+                data={this.state.jobArray}
+                isLoaded={this.state.isLoaded}
+                errorMessage={this.state.errorMessage}
+                screenWidth={this.state.screenWidth}
+            />
+        );
 
-        if (this.state.isLoaded && !this.state.errorMessage) {
-            this.barGraph = (
-                <div id="jobTitlePlot">
-                    <Plot
-                        data={[
-                            {
-                                x: data[0],
-                                y: data[1],
-                                type: 'bar'
-                            }
-                        ]}
-                        layout={{
-                            yaxis: {
-                                title: "Number of Job Postings",
-                                titlefont: {
-                                    family: 'Open Sans',
-                                    size: 18
-                                }
-                            }
-                        }
-                        }
-                    />
-                </div>
-            );
-        }
         return (
             <div className="margin-left">
                 <div>
                     <h2 className="center-small">Job Skills</h2>
-                    <p className="center-small">
+                    <p className="center-small page-description">
                         Search for a job title to see the most common words that appear in the
                         qualifications for the searched job!
                     </p>
@@ -151,6 +149,16 @@ class Skills extends Component {
                             onClick={() => this.handleClick()}>
                             Search
                         </Button>
+                        {' '}
+                        <Button
+                            color="danger"
+                            disabled={!this.state.isLoaded}
+                            onClick={() => this.save(
+                                this.state.jobArray,
+                                this.state.jobTitle,
+                                'skills')}>
+                            Save new search
+                        </Button>
                     </div>
                 </div>
                 <div className="blue-bar"></div>
@@ -163,3 +171,62 @@ class Skills extends Component {
 }
 
 export default Skills;
+
+export class SkillsBarGraph extends Component {
+    render() {
+        // Only render the bar graph when their is no error message displayed and the results are loaded
+        if (this.props.isLoaded && !this.props.errorMessage) {
+            // Determine the size of the graph
+            if (this.props.screenWidth < 768) {
+                this.layout = {
+                    width: 320, height: 400,
+                    yaxis: {
+                        title: "Skill frequency",
+                        titlefont: {
+                            family: 'Open Sans',
+                            size: 18
+                        }
+                    }
+                }
+            } else if (this.props.screenWidth < 992) {
+                this.layout = {
+                    width: 600, height: 500,
+                    yaxis: {
+                        title: "Skill frequency",
+                        titlefont: {
+                            family: 'Open Sans',
+                            size: 18
+                        }
+                    }
+                }
+            } else {
+                this.layout = {
+                    width: 780, height: 600,
+                    yaxis: {
+                        title: "Skill frequency",
+                        titlefont: {
+                            family: 'Open Sans',
+                            size: 18
+                        }
+                    }
+                }
+            }
+
+            return (
+                <div id="locationPlot">
+                    <Plot
+                        data={[
+                            {
+                                x: this.props.data[0],
+                                y: this.props.data[1],
+                                type: 'bar'
+                            }
+                        ]}
+                        layout={this.layout}
+                    />
+                </div>
+            );
+        }
+        return <div></div>;
+    }
+}

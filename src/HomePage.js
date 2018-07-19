@@ -7,15 +7,17 @@ class HomePage extends Component {
             <div className="container">
                 <h2 className="center-small">Welcome!</h2>
                 <p className="App-intro center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        We are PathFinder and this is our explanatory introduction. You can navigate our
-                        website using the navigation bar above, using the tab most relevant to you. The
-                        “Job Skills” tab allows you to search for a job title and view a graphic of the
-                        frequency of key words like skills or job duties. The “Jobs Near You” tab allows
-                        you to search for a location of interest and view the most common job positions
-                        in that location. The “Hiring?” tab allows you to search for a job position and
-                        a location of interest to get an ‘average’ pay of said job in the location. If
-                        you login, our website will save your recent searches to a list that you can
-                        revisit.
+                        We are PathFinder and we want to help you find your path, whether that be as a
+                        student looking for the typical job in your city, an employer trying to grow your
+                        company, or a professional looking to bulk up your resume for your next big career
+                        move. We at PathFinder have designed three unique search features that you can
+                        access using tabs above. The “Job Skills” tab allows you to search for a job title
+                        and view a graphic of the frequency of key words like skills or job duties. The
+                        “Jobs Near You” tab allows you to search for a location of interest and view the
+                        most common job positions in that location. The “Hiring?” tab allows you to search
+                        for a job position and a location of interest to get an ‘average’ pay of said job
+                        in the location. If you login, our website will save your recent searches to a
+                        list that you can revisit.
                     </p>
                 <div className="blue-bar"></div>
                 <h3>Quick Tips:</h3>
