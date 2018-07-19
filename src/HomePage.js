@@ -16,8 +16,8 @@ class HomePage extends Component {
                         “Jobs Near You” tab allows you to search for a location of interest and view the
                         most common job positions in that location. The “Hiring?” tab allows you to search
                         for a job position and a location of interest to get an ‘average’ pay of said job
-                        in the location. If you login, our website will save your recent searches to a
-                        list that you can revisit.
+                        in the location. If you sign-up and login, you will be able to save your recent
+                        searches to a list that you can revisit.
                     </p>
                 <div className="blue-bar"></div>
                 <h3>Quick Tips:</h3>

@@ -2,10 +2,12 @@
     "name": "info343-group-project",
     "version": "0.1.0",
     "private": true,
+    "homepage": "https://Tristan6.github.io/info343-group-project/",
     "dependencies": {
         "@firebase/auth": "^0.7.0",
         "bootstrap": "^4.1.2",
         "firebase": "^5.2.0",
+        "gh-pages": "^1.2.0",
         "plotly.js": "^1.39.2",
         "react": "^16.4.1",
         "react-bootstrap": "^0.32.1",
@@ -16,6 +18,8 @@
         "reactstrap": "^6.3.0"
     },
     "scripts": {
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test --env=jsdom",
